@@ -1,9 +1,10 @@
 #-------------------------------------------------------------------------
-# AUTHOR: your name
-# FILENAME: title of the source file
-# SPECIFICATION: description of the program
+# AUTHOR: Abigail Calderon
+# FILENAME: indexing.py
+# SPECIFICATION: Reads data from collection.csv and performs stopword removal, stemming, and creates
+#               a document-term matrix 
 # FOR: CS 4250- Assignment #1
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: 1.5 days
 #-----------------------------------------------------------*/
 #IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH
 #AS numpy OR pandas. You have to work here only with standard arrays
@@ -11,43 +12,38 @@
 
 import csv
 import math
-documents = []
 
+documents = []
 #Reading the data in a csv file
 with open('collection.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
     for i, row in enumerate(reader):
         if i > 0: # skipping the header
             documents.append(row[0])
-#print(documents)
-
-# for each document, turn it's string into a list and put into a container of all documents 
-
-docs =[]
-for line in documents:
-    docs.append(line.split())
-#print(docs)
-
-
 
 def print_docs(D):
     for index,D in enumerate(D):
         print(f'\tDocument {index+1}: {D}')
 
+# for each document, turn it's string into a list and put into a container of all documents 
+docs =[]
+for line in documents:
+    docs.append(line.split())
+
 print('Original Document Contents:')
 print_docs(docs)
+
 #Conducting stopword removal for pronouns/conjunctions. Hint: use a set to define
 #your stopwords.
 #--> add your Python code here
 stopWords = {"nor","yet","and", "but", "or", "because'", "although", "since", "if", "when","she","her", "he", "they" ,"their", "we", "i", "you", "it", "who"}
 for i in range(len(docs)):
     mylist = []
-    #print(document_words[i])
     for j in range(len(docs[i])):
         if docs[i][j].lower() not in stopWords:
-            #print(f'{doc1[i][j]} not removed')
             mylist.append(docs[i][j])
     docs[i]=mylist
+
 print('Document contents after stopword removal: ')
 print_docs(docs)
 
@@ -67,8 +63,6 @@ for i in range(len(docs)):
                 docs[i][j]=k
 print(f'Document contents after stemming: ')
 print_docs(docs)
-
-
 
 
 #Identifying the index terms.
@@ -108,7 +102,6 @@ def idf(term,D):
     a = math.log10( (len(D))/df(term,D) )
     #print("idf: ",a, "for term ",term)
     return round(a,2)
-#print(idf('cat',docs))
 
 def tf_idf(term,d,D):
     #print("tf-idf: ",tf(term,d)*idf(term,D), " for term ",term, " and doc ",d)
@@ -118,13 +111,11 @@ def tf_idf(term,d,D):
 #Building the document-term matrix by using the tf-idf weights.
 #--> add your Python code here
 docTermMatrix = []
-
 for doc in docs:
     term_count = []
     for term in terms:
         term_count.append(tf_idf(term,doc,docs))
     docTermMatrix.append(term_count)
-
 
 
 #Printing the document-term matrix.
@@ -140,11 +131,11 @@ for r in range(len(docTermMatrix)):
     print("")
     num+=1
 
-tf_matrix = []
-for d in docs:
-    myList = []
-    for t in terms:
-        #myList.append(tf(t,d))
-        #myList.append(df(t,docs))
-        myList.append(idf(t,docs))
-    #print(myList)
+# tf_matrix = []
+# for d in docs:
+#     myList = []
+#     for t in terms:
+#         #myList.append(tf(t,d))
+#         #myList.append(df(t,docs))
+#         myList.append(idf(t,docs))
+#     #print(myList)

@@ -1,15 +1,3 @@
-#-------------------------------------------------------------------------
-# AUTHOR: Abigail Calderon
-# FILENAME: indexing.py
-# SPECIFICATION: Reads data from collection.csv and performs stopword removal, stemming, and creates
-#               a document-term matrix 
-# FOR: CS 4250- Assignment #1
-# TIME SPENT: 1.5 days
-#-----------------------------------------------------------*/
-#IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH
-#AS numpy OR pandas. You have to work here only with standard arrays
-#Importing some Python libraries
-
 import csv
 import math
 
